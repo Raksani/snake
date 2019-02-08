@@ -8,14 +8,21 @@ class SnakeWindow(arcade.Window):
     def __init__(self, width, height):
         super().__init__(width, height)
 
+        self.snake_sprite = arcade.Sprite('images/block.png')
+        self.snake_sprite.set_position(300, 300)
+
         arcade.set_background_color(arcade.color.BLACK)
 
+    # draw sprite
+    def on_draw(self):
+        arcade.start_render()
+
+        self.snake_sprite.draw()
 
 def main():
     window = SnakeWindow(SCREEN_WIDTH, SCREEN_HEIGHT)
     arcade.set_window(window)
     arcade.run()
-
 
 if __name__ == '__main__':
     main()
