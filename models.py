@@ -30,6 +30,7 @@ class Snake:
                      (x - Snake.BLOCK_SIZE, y),
                      (x - 2 * Snake.BLOCK_SIZE, y)]
         self.length = 3
+        self.has_eaten = False
 
     def update(self, delta):
         # snake moves along in x+5 unit, if x direction is more than window width then reset to zero.
@@ -46,12 +47,16 @@ class Snake:
             self.x = 0
         # self.x += 16
         # change to be
-        # แงะไปทีละชั้น self.direction เพื่อดูว่าขึ้นหรือลงหรือซ้ายหรือขวาใส่ตำแหน่งที่Arrayตัวที่0คือตัวx และ คูณกับ blocksize เป็นระยะทางที่จะเคลื่อนที่
+        # แงะไปทีละชั้น self.direction เพื่อดูว่าขึ้นหรือลงหรือซ้ายหรือขวาใส่ตำแหน่งที่Arrayตัวที่0คือตัวx
+        # และ คูณกับ blocksize เป็นระยะทางที่จะเคลื่อนที่
         self.x += DIR_OFFSET[self.direction][0] * self.BLOCK_SIZE
         self.y += DIR_OFFSET[self.direction][1] * self.BLOCK_SIZE
         self.wait_time = 0
         self.body.insert(0, (self.x, self.y))
         self.body.pop()
+        if self.has_eaten:
+            self.body.append(self.body[len(self.body)-1])
+            self.has_eaten = False
 
     def can_eat(self, heart):
         # ตรวจสอบพิกัดหัวของงู และพิกัดของ heart คืนค่า True ถ้าตรงกัน
@@ -74,6 +79,7 @@ class World:
 
         if self.snake.can_eat(self.heart):
             self.heart.random_position()
+            self.snake.has_eaten = True
 
     def on_key_press(self, key, key_modifiers):
         # เพิ่มโค้ดตรวจสอบปุ่มและเปลี่ยนทิศทางของ self.snake
