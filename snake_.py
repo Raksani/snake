@@ -36,6 +36,7 @@ class SnakeWindow(arcade.Window):
     def update(self, delta):
         self.world.update(delta)
 
+
     # draw sprite
     def on_draw(self):
         arcade.start_render()
