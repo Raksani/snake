@@ -53,6 +53,12 @@ class Snake:
         self.body.insert(0, (self.x, self.y))
         self.body.pop()
 
+    def can_eat(self, heart):
+        # ตรวจสอบพิกัดหัวของงู และพิกัดของ heart คืนค่า True ถ้าตรงกัน
+        return self.x == heart.x and self.y == heart.y
+
+
+
 # for collect game data
 class World:
     def __init__(self, width, height):
@@ -65,6 +71,9 @@ class World:
 
     def update(self, delta):
         self.snake.update(delta)
+
+        if self.snake.can_eat(self.heart):
+            self.heart.random_position()
 
     def on_key_press(self, key, key_modifiers):
         # เพิ่มโค้ดตรวจสอบปุ่มและเปลี่ยนทิศทางของ self.snake
