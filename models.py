@@ -24,6 +24,11 @@ class Snake:
         self.y = y
         self.wait_time = 0
         self.direction = DIR_RIGHT
+        # make snake longer
+        self.body = [(x, y),
+                     (x - Snake.BLOCK_SIZE, y),
+                     (x - 2 * Snake.BLOCK_SIZE, y)]
+        self.length = 3
 
     def update(self, delta):
         # snake moves along in x+5 unit, if x direction is more than window width then reset to zero.
@@ -44,6 +49,8 @@ class Snake:
         self.x += DIR_OFFSET[self.direction][0] * self.BLOCK_SIZE
         self.y += DIR_OFFSET[self.direction][1] * self.BLOCK_SIZE
         self.wait_time = 0
+        self.body.insert(0, (self.x, self.y))
+        self.body.pop()
 
 # for collect game data
 class World:
